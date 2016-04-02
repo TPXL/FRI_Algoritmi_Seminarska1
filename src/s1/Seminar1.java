@@ -145,67 +145,7 @@ class Seminar1 {
 			return ret;
 		}
 
-		
-		class Job{
-			public T p;
-			public int left;
-			public int right;
-			public double dist;
-			public int dim;
-			public int ret;
-			public Job(T p, int left, int right, double dist, int dim, int ret){
-				this.p = p;
-				this.left = left;
-				this.right = right;
-				this.dist = dist;
-				this.dim = dim;
-				this.ret = ret;
-			}
-		}
-		
-		BlockingQueue<Job> jobs;
-		
-
-		class Worker implements Runnable{
-			Integer result = 0;
-			@Override
-			public void run() {
-			    try {
-			        while (!Thread.currentThread().isInterrupted()) {
-			        	Job job = jobs.take();
-			        	if (job.left > job.right){
-			        		synchronized (result) {
-			        			result += job.ret;
-							}
-							continue;
-			        	}
-						int mid = (job.left + job.right) / 2;
-						T curr = data[mid];
-						double cdimp = getters[job.dim].applyAsDouble(job.p);
-						double cdimc = getters[job.dim].applyAsDouble(curr);
-						double diff = Math.abs(cdimp - cdimc);
-						if (eulerSq(job.p, curr) <= job.dist)
-							job.ret += getPayload.applyAsInt(curr);
-						if (cdimp < cdimc || diff * diff < job.dist) {
-							//ret += find(job.p, job.left, mid - 1, job.dist, (job.dim + 1) % k);
-							Job nj = new Job(job.p, job.left, mid-1, job.dist, (job.dim+1) % k, job.ret);
-							jobs.put(nj);
-						}
-						if (cdimp >= cdimc || diff * diff < job.dist) {
-							//ret += find(p, mid + 1, right, dist, (dim + 1) % k);
-							Job nj = new Job(job.p, mid+1, job.right, job.dist, (job.dim+1) % k, job.ret);
-							jobs.put(nj);
-						}
-			        }
-			      } catch (Exception e) {
-			        
-			      }
-			}
-		}
-		
 		public int find(T p, double dist) {
-			if(jobs == null)
-				jobs = new ArrayBlockingQueue<>(1000);
 			return find(p, 0, data.length - 1, greatCircleToEulerSq(dist), 0);
 		}
 		
