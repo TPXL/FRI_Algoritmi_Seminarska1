@@ -251,25 +251,6 @@ class Seminar1 {
 		kdtree = new KDTree<Point>(Point::getPayload, Point::getX, Point::getY, Point::getZ);
 	}
 
-	public static void main(String args[]) {
-		System.out.println(kdtree.greatCircleToEulerSq(10));
-		Random r = new Random(1234567l);
-		int n = 127;
-		Point pts[] = new Point[n];
-		for (int i = 0; i < n; i++) {
-			pts[i] = new Point(r.nextDouble() * 100, r.nextDouble() * 100, r.nextDouble() * 100, i);
-			System.out.println(pts[i]);
-		}
-
-		kdtree.insert(pts);
-		kdtree.print();
-		System.out.println();
-		for (int i = 0; i < pts.length; i++) {
-			System.out.println(pts[i]);
-		}
-
-	}
-
 	public void addPoints(double[] x, double[] y, double[] z, int[] value) {
 		Point points[] = IntStream.range(0, x.length).parallel()
 				.mapToObj(ind -> new Point(x[ind], y[ind], z[ind], value[ind])).toArray(Point[]::new);
