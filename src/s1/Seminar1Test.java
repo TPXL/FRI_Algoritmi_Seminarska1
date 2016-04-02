@@ -9,9 +9,6 @@ import java.util.Scanner;
 public class Seminar1Test {
 	public static void main(String[] args) {
         // radium of sphere
-    	Scanner sc = new Scanner(System.in);
-    	sc.nextLine();
-    	
     	double r = 5;
 
         // points on sphere
@@ -70,8 +67,5 @@ public class Seminar1Test {
         
         boolean pass = naivno==kdtree;
         System.out.println("pass: " + pass + " (" + naivno + ", " + kdtree + ")\nNaivno: " + (tnaivno/1_000_000d) + ", " + (tnaivnobuild/1_000_000d) + "\nKdtree: " + (tkdtree/1_000_000d) + ", " + (tkdtreebuild/1_000_000d));
-        
-        sc.nextLine();
-    	
     }
 }
